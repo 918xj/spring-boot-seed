@@ -32,7 +32,7 @@ public class DruidConfiguration {
 
         //登录查看信息的账号密码
         servletRegistrationBean.addInitParameter("loginUsername","admin");
-        servletRegistrationBean.addInitParameter("loginPassword","ttsh1301");
+        servletRegistrationBean.addInitParameter("loginPassword","123456");
         //是否能够重置数据
         servletRegistrationBean.addInitParameter("resetEnable","false");
         return servletRegistrationBean;
