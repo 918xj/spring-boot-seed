@@ -9,7 +9,7 @@
     <packaging>jar</packaging>
 
     <name>mc-core</name>
-    <description>天天生活智能会员平台</description>
+    <description>API接口服务</description>
 
     <parent>
         <groupId>com.ttsh</groupId>
