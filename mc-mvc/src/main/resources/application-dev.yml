@@ -1,0 +1,102 @@
+# 开发环境配置
+server:
+  port: 8000
+
+spring:
+  #数据源
+  datasource:
+    #数据库访问配置
+    type: com.alibaba.druid.pool.DruidDataSource
+    driverClassName: com.mysql.jdbc.Driver
+    url: jdbc:mysql://localhost:3306/mc?useSSL=false&autoReconnect=true&characterEncoding=utf-8
+    username: root
+    password: 123456
+
+    #连接池druid配置
+    druid:
+      # 初始化时建立物理连接的个数
+      initialSize: 1
+      # 最小连接池数量
+      minIdle: 1
+      # 最大连接池数量
+      maxActive: 20
+      # 连接时最大等待时间,单位毫秒
+      maxWait: 60000
+      # 配置间隔多久才进行一次检测,检测需要关闭的空闲连接,单位是毫秒
+      timeBetweenEvictionRunsMillis: 60000
+      # 配置一个连接在池中最小生存的时间,单位是毫秒
+      minEvictableIdleTimeMillis: 300000
+      # 用来检测连接是否有效的sql,要求是一个查询语句
+      validationQuery: SELECT 1 FROM DUAL
+      # 申请连接时执行 validationQuery 检测连接是否有效,做了这个配置会降低性能
+      testOnBorrow: false
+      # 归还连接时执行 validationQuery 检测连接是否有效,做了这个配置会降低性能
+      testOnReturn: false
+      # 建议配置为true,不影响性能,并且保证安全性;申请连接的时候检测,
+      # 如果空闲时间大于 timeBetweenEvictionRunsMillis,执行 validationQuery 检测连接是否有效
+      testWhileIdle: true
+      # 是否缓存preparedStatement,也就是 PSCache
+      poolPreparedStatements: true
+      # 指定每个连接上 PSCache 的大小
+      maxOpenPreparedStatements: 20
+      # 通过 connectProperties 属性来打开mergeSql功能；慢SQL记录
+      connectionProperties: druid.stat.merggSql=true;druid.stat.slowSqlMillis=3000
+      # 合并多个DruidDataSource的监控数据
+      useGlobalDataSourceStat: true
+      # 配置监控统计拦截的filters,属性类型是字符串,通过别名的方式配置扩展插件,
+      # 常用的插件有:监控统计用的stat;日志用的log4j2;防御sql注入的wall
+      filter:
+        stat:
+          enabled: true
+          log-slow-sql: true
+          slow-sql-millis: 3000
+          merge-sql: true
+        wall:
+          enabled: true
+          #对被认为是攻击的SQL进行LOG.error输出
+          log-violation: true
+          #对被认为是攻击的SQL抛出SQLExcepton
+          throw-exception: true
+          db-type: mysql
+          config:
+            alter-table-allow: false
+            truncate-allow: false
+            drop-table-allow: false
+            #是否允许非以上基本语句的其他语句，缺省关闭，通过这个选项就能够屏蔽DDL
+            none-base-statement-allow: false
+            #检查UPDATE语句是否无where条件，这是有风险的，但不是SQL注入类型的风险
+            update-where-none-check: true
+            #SELECT ... INTO OUTFILE 是否允许，这个是mysql注入攻击的常见手段，缺省是禁止的
+            select-into-outfile-allow: false
+            #是否允许调用Connection.getMetadata方法，这个方法调用会暴露数据库的表信息
+            metadata-allow: true
+            #允许多条sql一起执行
+            multiStatementAllow: true
+        slf4j:
+          enabled: true
+          statement-close-after-log-enabled: false
+          statement-create-after-log-enabled: false
+          result-set-close-after-log-enabled: false
+          result-set-open-after-log-enabled: false
+
+#  cache:
+#    type: redis
+#  # Redis配置
+#  redis:
+#    database: 0
+#    host: 127.0.0.1
+#    port: 6379
+#    password:
+#    # 连接超时时间（毫秒）
+#    timeout: 5000ms
+#    #jedis客户端
+#    jedis:
+#      pool:
+#        # 连接池最大连接数（使用负值表示没有限制）
+#        max-active: 8
+#        # 连接池中的最大空闲连接
+#        max-idle: 8
+#        # 连接池最大阻塞等待时间（使用负值表示没有限制）
+#        max-wait: -1ms
+#        # 连接池中的最小空闲连接
+#        min-idle: 0
